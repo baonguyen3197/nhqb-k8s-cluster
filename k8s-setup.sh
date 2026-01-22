@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-K8S_VERSION="v1.34"
+K8S_VERSION="v1.35"
 KEYRING_DIR="/etc/apt/keyrings"
 K8S_KEYRING="${KEYRING_DIR}/kubernetes-apt-keyring.gpg"
 K8S_REPO_FILE="/etc/apt/sources.list.d/kubernetes.list"
@@ -13,7 +13,7 @@ echo "[INFO] Installing required packages..."
 sudo apt-get install -y \
   apt-transport-https \
   ca-certificates \
-  curl \ư
+  curl \
   gpg
 
 echo "[INFO] Ensuring ${KEYRING_DIR} exists..."
@@ -34,7 +34,7 @@ curl -fsSL "https://pkgs.k8s.io/core:/stable:/${K8S_VERSION}/deb/Release.key" \
 echo "[INFO] Setting permissions on keyring..."
 sudo chmod 644 "${K8S_KEYRING}"
 
-# ------------------------------------------------------------
+# ------------------------------------------------------------# ------------------------------------------------------------
 # Add the Kubernetes apt repository
 # ------------------------------------------------------------
 echo "[INFO] Writing Kubernetes APT repository..."
@@ -54,5 +54,11 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 echo "[INFO] Enabling kubelet service..."
 sudo systemctl enable --now kubelet
+
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 echo "[SUCCESS] Kubernetes ${K8S_VERSION} APT setup completed."
