@@ -1,0 +1,21 @@
+# Add files to this .gitignore as needed
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+node_modules/
+__pycache__/
+.env
+.env.*
+*.pem
+*.key
+.venv/
+venv/
+*.pyc
+*.db
+.web
+assets/external/
+*.py[cod]
+.states
+profiles.json
