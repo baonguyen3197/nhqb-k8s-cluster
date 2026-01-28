@@ -1,10 +1,28 @@
-name: Must run on custom-runner
+name: Build & Push Docker Images
 
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'user-service/**'
+      - 'store-service/**'
+      - 'db-service/**'
+      - 'admin-service/**'
 
 jobs:
-  init:
+  build:
     runs-on: self-hosted
+
+    strategy:
+      matrix:
+        service:
+          - user-service
+          - store-service
+          - db-service
+          - admin-service
     steps:
-      - run: echo "Hello Cloud Guru!"
-      - run: echo $HOSTNAME
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: test
+        run: echo "Testing ${ { matrix.service } }"
