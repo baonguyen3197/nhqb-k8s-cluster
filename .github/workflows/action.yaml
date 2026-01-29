@@ -13,9 +13,29 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    
     strategy:
+      fail-fast: false
       matrix:
         service: [user-service, store-service, db-service, admin-service]
+    
     steps:
-      - uses: actions/checkout@v3
-      - run: echo "Testing ${{ matrix.service }}"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Read VERSION for ${{ matrix.service }}
+        shell: bash
+        run: |
+          VERSION_FILE="app/${{ matrix.service }}/VERSION"
+          VERSION="$(tr -d '\r\n ' < "$VERSION_FILE")"
+          if [ -z "$VERSION" ]; then
+            echo "Empty VERSION in $VERSION_FILE" >&2
+            exit 1
+          fi  
+
+      # - name: Build and Push ${{ matrix.service }} Docker Image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: ./${{ matrix.service }}
+      #     push: true
+      #     tags: your-dockerhub-username/${{ matrix.service }}:latest
