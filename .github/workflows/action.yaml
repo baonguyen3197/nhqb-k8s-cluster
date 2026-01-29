@@ -31,7 +31,10 @@ jobs:
           if [ -z "$VERSION" ]; then
             echo "Empty VERSION in $VERSION_FILE" >&2
             exit 1
-          fi  
+          fi
+
+          echo "SERVICE_VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "Service ${{ matrix.service }} version: $VERSION"
 
       # - name: Build and Push ${{ matrix.service }} Docker Image
       #   uses: docker/build-push-action@v4
