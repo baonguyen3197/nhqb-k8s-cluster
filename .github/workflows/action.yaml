@@ -4,10 +4,10 @@ on:
   push:
     branches: [main]
     paths:
-      - 'user-service/**'
-      - 'store-service/**'
-      - 'db-service/**'
-      - 'admin-service/**'
+      - 'app/user-service/**'
+      - 'app/store-service/**'
+      - 'app/db-service/**'
+      - 'app/admin-service/**'
       - '.github/workflows/**'
 
 jobs:
@@ -49,6 +49,8 @@ jobs:
       - name: Build and Push ${{ matrix.service }} Docker Image
         uses: docker/build-push-action@v6
         with:
-          context: ./${{ matrix.service }}
+          context: ./app/${{ matrix.service }}
+          file: ./app/${{ matrix.service }}/Dockerfile
           push: true
-          tags: nhqb3197/${{ matrix.service }}:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:${{ env.SERVICE_VERSION }}
