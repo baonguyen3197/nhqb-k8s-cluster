@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'app/**'
+      - 'app/manifests/**'
       - 'app/user-service/**'
       - 'app/store-service/**'
       - 'app/db-service/**'
