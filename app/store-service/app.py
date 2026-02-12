@@ -5,7 +5,6 @@ import requests
 app = FastAPI()
 DB_SERVICE_URL = "http://db-service:8000/db"
 
-
 @app.get("/store/health")
 async def health_check():
     return {"status": "Store health ok."}
