@@ -4,7 +4,7 @@ import requests
 app = FastAPI()
 STORE_URL = "http://store-service:8000/store"
 
-@app.get("/users/health")
+@app.get("/user/health")
 async def health_check():
     return {"status": "User health ok."}
 
