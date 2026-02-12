@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nhqb-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/baonguyen3197/nhqb-k8s-cluster.git
+    targetRevision: main
+    path: app/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
