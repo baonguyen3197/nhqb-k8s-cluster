@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: nhqb3197/user-service
+          image: nhqb3197/user-service:1.0.0
           ports:
             - containerPort: 8000
           readinessProbe:
