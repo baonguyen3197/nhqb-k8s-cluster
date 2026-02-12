@@ -5,6 +5,8 @@ metadata:
   labels:
     app: admin-service
 spec:
+  imagePullSecrets:
+    - name: regcred
   replicas: 1
   selector:
     matchLabels:
